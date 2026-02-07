@@ -1223,181 +1223,140 @@
       canvas.style.display = 'none';
       fallback.style.display = 'flex';
     } else {
-      // Three.js scene
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-      camera.position.set(0, 0, 6);
-      
-      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
-      
-      // Lights
-      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-      const light = new THREE.DirectionalLight(0x4A90E2, 1.2);
-      light.position.set(5, 5, 5);
-      scene.add(light);
-      
-      // Texture loader
-      const textureLoader = new THREE.TextureLoader();
-      
-      // Array of project images
-      const projectImages = [
-        'images/Alokana_project_images/Alokana01.jpeg',
-        'images/Alokana_project_images/Alokana_02.jpeg',
-        'images/thala-sanchara-project/thala-sanchara.png',
-        'images/Manikelas-project/manikels.jpg',
-        'images/thathkar-project/thathkar.jpg',
-        'images/logos/logo-original.png',
-        'images/OwnersAndMembersPotos/Team-image01.jpeg',
-        'images/OwnersAndMembersPotos/Team-image02.jpeg',
-        'images/OwnersAndMembersPotos/Team-image03.jpeg',
-        'images/OwnersAndMembersPotos/Team-image04.jpeg',
-        'images/logos/logo-image.jpeg',
-        'images/OwnersAndMembersPotos/Team-image01.jpeg'
-      ];
-      
-      // Create materials for each face with different images
-      const materials = projectImages.map((imagePath, index) => {
-        return textureLoader.load(
-          imagePath,
-          (texture) => {
-            texture.encoding = THREE.sRGBColorSpace;
-          },
-          undefined,
-          (error) => {
-            console.log('Failed to load image:', imagePath);
-          }
-        ).then ? textureLoader.load(imagePath) : new THREE.CanvasTexture(createFallbackCanvas(index));
-      });
-      
-      // Fallback canvas creator
-      function createFallbackCanvas(index) {
-        const canvas2D = document.createElement('canvas');
-        canvas2D.width = 256;
-        canvas2D.height = 256;
-        const ctx = canvas2D.getContext('2d');
+      try {
+        // Three.js scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+        camera.position.set(0, 0, 6);
         
-        // Create gradient background
-        const gradient = ctx.createLinearGradient(0, 0, 256, 256);
-        gradient.addColorStop(0, '#4a90e2');
-        gradient.addColorStop(1, '#5ab9ea');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, 256, 256);
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
         
-        // Add text
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 20px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('Symphony', 128, 100);
-        ctx.fillText('Events', 128, 140);
-        ctx.fillText('LK', 128, 180);
+        // Lights
+        scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+        const light = new THREE.DirectionalLight(0x4A90E2, 1.5);
+        light.position.set(5, 5, 5);
+        scene.add(light);
         
-        return canvas2D;
-      }
-      
-      // Create materials with actual textures
-      const loadedMaterials = [];
-      let loadedCount = 0;
-      
-      projectImages.forEach((imagePath) => {
-        textureLoader.load(
-          imagePath,
-          (texture) => {
-            texture.encoding = THREE.sRGBColorSpace;
-            const material = new THREE.MeshStandardMaterial({
-              map: texture,
-              color: 0xffffff,
-              metalness: 0.3,
-              roughness: 0.5,
-              flatShading: false
-            });
-            loadedMaterials.push(material);
-            loadedCount++;
-          },
-          undefined,
-          (error) => {
-            // Fallback material
-            const fallbackCanvas = createFallbackCanvas(loadedCount);
-            const fallbackTexture = new THREE.CanvasTexture(fallbackCanvas);
-            const material = new THREE.MeshStandardMaterial({
-              map: fallbackTexture,
-              color: 0xffffff,
-              metalness: 0.3,
-              roughness: 0.5
-            });
-            loadedMaterials.push(material);
-            loadedCount++;
-          }
-        );
-      });
-      
-      // Create the 3D object
-      const geometry = new THREE.DodecahedronGeometry(1, 0);
-      
-      // Use multi-material approach
-      const meshes = [];
-      const tempMaterials = [];
-      
-      // Create initial materials for all faces
-      for (let i = 0; i < 12; i++) {
-        const canvas2D = createFallbackCanvas(i);
-        const texture = new THREE.CanvasTexture(canvas2D);
-        tempMaterials.push(new THREE.MeshStandardMaterial({
-          map: texture,
-          color: 0xffffff,
-          metalness: 0.3,
-          roughness: 0.5
-        }));
-      }
-      
-      const mesh = new THREE.Mesh(geometry, tempMaterials);
-      scene.add(mesh);
-      
-      // Load textures and update materials
-      projectImages.forEach((imagePath, index) => {
-        textureLoader.load(
-          imagePath,
-          (texture) => {
-            texture.encoding = THREE.sRGBColorSpace;
-            if (tempMaterials[index]) {
-              tempMaterials[index].map = texture;
-              tempMaterials[index].needsUpdate = true;
-            }
-          }
-        );
-      });
-      
-      // Animation
-      let mouseX = 0, mouseY = 0;
-      window.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-      });
-      
-      function animate() {
-        requestAnimationFrame(animate);
-        mesh.rotation.y += 0.004;
-        mesh.rotation.x += 0.002;
-        mesh.position.x += (mouseX * 0.5 - mesh.position.x) * 0.05;
-        mesh.position.y += (mouseY * 0.3 - mesh.position.y) * 0.05;
-        renderer.render(scene, camera);
-      }
-      animate();
-      
-      // Resize
-      window.addEventListener('resize', () => {
-        if (window.innerWidth < 1024) {
-          canvas.style.display = 'none';
-          fallback.style.display = 'flex';
-        } else {
-          canvas.style.display = 'block';
-          fallback.style.display = 'none';
-          camera.aspect = canvas.clientWidth / canvas.clientHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+        const textureLoader = new THREE.TextureLoader();
+        
+        // Array of 12 project images for dodecahedron faces
+        const projectImages = [
+          'images/Alokana_project_images/Alokana01.jpeg',
+          'images/Alokana_project_images/Alokana_02.jpeg',
+          'images/thala-sanchara-project/thala-sanchara.png',
+          'images/Manikelas-project/manikels.jpg',
+          'images/thathkar-project/thathkar.jpg',
+          'images/logos/logo-original.png',
+          'images/OwnersAndMembersPotos/Team-image01.jpeg',
+          'images/OwnersAndMembersPotos/Team-image02.jpeg',
+          'images/OwnersAndMembersPotos/Team-image03.jpeg',
+          'images/OwnersAndMembersPotos/Team-image04.jpeg',
+          'images/logos/logo-image.jpeg',
+          'images/Alokana_project_images/Alokana01.jpeg'
+        ];
+        
+        // Create fallback canvas texture
+        function createFallbackCanvas() {
+          const canvas2D = document.createElement('canvas');
+          canvas2D.width = 512;
+          canvas2D.height = 512;
+          const ctx = canvas2D.getContext('2d');
+          
+          const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+          gradient.addColorStop(0, '#4a90e2');
+          gradient.addColorStop(1, '#5ab9ea');
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, 512, 512);
+          
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 48px Arial';
+          ctx.textAlign = 'center';
+          ctx.fillText('Symphony', 256, 200);
+          ctx.fillText('Events', 256, 280);
+          ctx.fillText('LK', 256, 360);
+          
+          return canvas2D;
         }
-      });
+        
+        // Create materials array for all 12 faces
+        const materials = [];
+        let loadedCount = 0;
+        
+        for (let i = 0; i < 12; i++) {
+          const fallbackCanvas = createFallbackCanvas();
+          const fallbackTexture = new THREE.CanvasTexture(fallbackCanvas);
+          
+          const material = new THREE.MeshStandardMaterial({
+            map: fallbackTexture,
+            color: 0xffffff,
+            metalness: 0.2,
+            roughness: 0.6,
+            side: THREE.FrontSide
+          });
+          
+          materials.push(material);
+          
+          // Load actual project image
+          if (i < projectImages.length) {
+            const imagePath = projectImages[i];
+            textureLoader.load(
+              imagePath,
+              (texture) => {
+                texture.encoding = THREE.sRGBColorSpace;
+                materials[i].map = texture;
+                materials[i].needsUpdate = true;
+                loadedCount++;
+              },
+              undefined,
+              (error) => {
+                console.warn('Failed to load image:', imagePath);
+              }
+            );
+          }
+        }
+        
+        // Create geometry with multiple materials
+        const geometry = new THREE.DodecahedronGeometry(1.5, 0);
+        const mesh = new THREE.Mesh(geometry, materials);
+        scene.add(mesh);
+        
+        // Animation
+        let mouseX = 0, mouseY = 0;
+        window.addEventListener('mousemove', (e) => {
+          mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+          mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
+        
+        function animate() {
+          requestAnimationFrame(animate);
+          mesh.rotation.y += 0.004;
+          mesh.rotation.x += 0.002;
+          mesh.position.x += (mouseX * 0.5 - mesh.position.x) * 0.05;
+          mesh.position.y += (mouseY * 0.3 - mesh.position.y) * 0.05;
+          renderer.render(scene, camera);
+        }
+        animate();
+        
+        // Resize handler
+        window.addEventListener('resize', () => {
+          if (window.innerWidth < 1024) {
+            canvas.style.display = 'none';
+            fallback.style.display = 'flex';
+          } else {
+            canvas.style.display = 'block';
+            fallback.style.display = 'none';
+            camera.aspect = canvas.clientWidth / canvas.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+          }
+        });
+      } catch (error) {
+        console.error('Three.js initialization error:', error);
+        canvas.style.display = 'none';
+        fallback.style.display = 'flex';
+      }
     }
     
     // Form submission
