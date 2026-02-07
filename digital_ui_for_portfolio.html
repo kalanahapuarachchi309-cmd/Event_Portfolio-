@@ -1233,89 +1233,140 @@
       renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
       
       // Lights
-      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-      const light = new THREE.DirectionalLight(0x4A90E2, 1.5);
+      scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+      const light = new THREE.DirectionalLight(0x4A90E2, 1.2);
       light.position.set(5, 5, 5);
       scene.add(light);
       
-      // Load logo texture
+      // Texture loader
       const textureLoader = new THREE.TextureLoader();
-      let texture = null;
       
-      textureLoader.load('images/logos/logo-original.png', (loadedTexture) => {
-        texture = loadedTexture;
-        texture.encoding = THREE.sRGBColorSpace;
-        
-        // Create canvas to draw logo and blue background
+      // Array of project images
+      const projectImages = [
+        'images/Alokana_project_images/Alokana01.jpeg',
+        'images/Alokana_project_images/Alokana_02.jpeg',
+        'images/thala-sanchara-project/thala-sanchara.png',
+        'images/Manikelas-project/manikels.jpg',
+        'images/thathkar-project/thathkar.jpg',
+        'images/logos/logo-original.png',
+        'images/OwnersAndMembersPotos/Team-image01.jpeg',
+        'images/OwnersAndMembersPotos/Team-image02.jpeg',
+        'images/OwnersAndMembersPotos/Team-image03.jpeg',
+        'images/OwnersAndMembersPotos/Team-image04.jpeg',
+        'images/logos/logo-image.jpeg',
+        'images/OwnersAndMembersPotos/Team-image01.jpeg'
+      ];
+      
+      // Create materials for each face with different images
+      const materials = projectImages.map((imagePath, index) => {
+        return textureLoader.load(
+          imagePath,
+          (texture) => {
+            texture.encoding = THREE.sRGBColorSpace;
+          },
+          undefined,
+          (error) => {
+            console.log('Failed to load image:', imagePath);
+          }
+        ).then ? textureLoader.load(imagePath) : new THREE.CanvasTexture(createFallbackCanvas(index));
+      });
+      
+      // Fallback canvas creator
+      function createFallbackCanvas(index) {
         const canvas2D = document.createElement('canvas');
-        canvas2D.width = 512;
-        canvas2D.height = 512;
+        canvas2D.width = 256;
+        canvas2D.height = 256;
         const ctx = canvas2D.getContext('2d');
         
-        // Draw blue gradient background
-        const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+        // Create gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 256, 256);
         gradient.addColorStop(0, '#4a90e2');
         gradient.addColorStop(1, '#5ab9ea');
         ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, 512, 512);
+        ctx.fillRect(0, 0, 256, 256);
         
-        // Draw border
-        ctx.strokeStyle = '#00072D';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(0, 0, 512, 512);
+        // Add text
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Symphony', 128, 100);
+        ctx.fillText('Events', 128, 140);
+        ctx.fillText('LK', 128, 180);
         
-        // Draw logo when it's loaded
-        const img = new Image();
-        img.onload = () => {
-          const size = Math.min(img.width, img.height) * 0.8;
-          const x = (512 - size) / 2;
-          const y = (512 - size) / 2;
-          ctx.drawImage(img, x, y, size, size);
-          
-          canvasTexture.needsUpdate = true;
-        };
-        img.src = 'images/logos/logo-original.png';
+        return canvas2D;
+      }
+      
+      // Create materials with actual textures
+      const loadedMaterials = [];
+      let loadedCount = 0;
+      
+      projectImages.forEach((imagePath) => {
+        textureLoader.load(
+          imagePath,
+          (texture) => {
+            texture.encoding = THREE.sRGBColorSpace;
+            const material = new THREE.MeshStandardMaterial({
+              map: texture,
+              color: 0xffffff,
+              metalness: 0.3,
+              roughness: 0.5,
+              flatShading: false
+            });
+            loadedMaterials.push(material);
+            loadedCount++;
+          },
+          undefined,
+          (error) => {
+            // Fallback material
+            const fallbackCanvas = createFallbackCanvas(loadedCount);
+            const fallbackTexture = new THREE.CanvasTexture(fallbackCanvas);
+            const material = new THREE.MeshStandardMaterial({
+              map: fallbackTexture,
+              color: 0xffffff,
+              metalness: 0.3,
+              roughness: 0.5
+            });
+            loadedMaterials.push(material);
+            loadedCount++;
+          }
+        );
       });
       
-      // Create texture from canvas
-      const canvasForTexture = document.createElement('canvas');
-      canvasForTexture.width = 512;
-      canvasForTexture.height = 512;
-      const ctxForTexture = canvasForTexture.getContext('2d');
-      
-      // Draw initial gradient
-      const gradient = ctxForTexture.createLinearGradient(0, 0, 512, 512);
-      gradient.addColorStop(0, '#4a90e2');
-      gradient.addColorStop(1, '#5ab9ea');
-      ctxForTexture.fillStyle = gradient;
-      ctxForTexture.fillRect(0, 0, 512, 512);
-      
-      // Add text while loading
-      ctxForTexture.fillStyle = '#ffffff';
-      ctxForTexture.font = 'bold 24px Arial';
-      ctxForTexture.textAlign = 'center';
-      ctxForTexture.fillText('Symphony', 256, 200);
-      ctxForTexture.fillText('Events', 256, 250);
-      ctxForTexture.fillText('LK', 256, 310);
-      
-      const canvasTexture = new THREE.CanvasTexture(canvasForTexture);
-      canvasTexture.magFilter = THREE.LinearFilter;
-      canvasTexture.minFilter = THREE.LinearFilter;
-      
-      // 3D Object with logo texture
+      // Create the 3D object
       const geometry = new THREE.DodecahedronGeometry(1, 0);
-      const material = new THREE.MeshStandardMaterial({
-        map: canvasTexture,
-        color: 0xffffff,
-        metalness: 0.3,
-        roughness: 0.4,
-        flatShading: true,
-        emissive: 0x4a90e2,
-        emissiveIntensity: 0.2
-      });
       
-      const mesh = new THREE.Mesh(geometry, material);
+      // Use multi-material approach
+      const meshes = [];
+      const tempMaterials = [];
+      
+      // Create initial materials for all faces
+      for (let i = 0; i < 12; i++) {
+        const canvas2D = createFallbackCanvas(i);
+        const texture = new THREE.CanvasTexture(canvas2D);
+        tempMaterials.push(new THREE.MeshStandardMaterial({
+          map: texture,
+          color: 0xffffff,
+          metalness: 0.3,
+          roughness: 0.5
+        }));
+      }
+      
+      const mesh = new THREE.Mesh(geometry, tempMaterials);
       scene.add(mesh);
+      
+      // Load textures and update materials
+      projectImages.forEach((imagePath, index) => {
+        textureLoader.load(
+          imagePath,
+          (texture) => {
+            texture.encoding = THREE.sRGBColorSpace;
+            if (tempMaterials[index]) {
+              tempMaterials[index].map = texture;
+              tempMaterials[index].needsUpdate = true;
+            }
+          }
+        );
+      });
       
       // Animation
       let mouseX = 0, mouseY = 0;
@@ -1326,8 +1377,8 @@
       
       function animate() {
         requestAnimationFrame(animate);
-        mesh.rotation.y += 0.005;
-        mesh.rotation.x += 0.003;
+        mesh.rotation.y += 0.004;
+        mesh.rotation.x += 0.002;
         mesh.position.x += (mouseX * 0.5 - mesh.position.x) * 0.05;
         mesh.position.y += (mouseY * 0.3 - mesh.position.y) * 0.05;
         renderer.render(scene, camera);
