@@ -888,7 +888,7 @@
         </div>
         
         <div class="canvas-wrap">
-          <canvas id="canvas"></canvas>
+          <canvas id="canvas" width="800" height="600"></canvas>
           <div class="fallback">
             <div class="cube-scene">
               <div class="cube">
@@ -1212,8 +1212,8 @@
     // Check WebGL support
     function hasWebGL() {
       try {
-        const ctx = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-        return !!(window.WebGLRenderingContext && ctx);
+        const ctx = canvas.getContext('webgl2') || canvas.getContext('webgl');
+        return !!ctx;
       } catch (e) {
         return false;
       }
@@ -1224,146 +1224,120 @@
       fallback.style.display = 'flex';
     } else {
       try {
-        // Three.js scene
+        // Scene setup
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-        camera.position.set(0, 0, 6);
+        const width = canvas.width;
+        const height = canvas.height;
         
-        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
+        const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+        camera.position.z = 3;
         
-        // Lights
-        scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-        const light = new THREE.DirectionalLight(0x4A90E2, 1.5);
-        light.position.set(5, 5, 5);
-        scene.add(light);
+        const renderer = new THREE.WebGLRenderer({ 
+          canvas: canvas, 
+          alpha: true, 
+          antialias: true,
+          powerPreference: 'high-performance'
+        });
+        renderer.setSize(width, height);
+        renderer.setClearColor(0x000000, 0);
+        renderer.render(scene, camera);
         
-        const textureLoader = new THREE.TextureLoader();
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+        scene.add(ambientLight);
         
-        // Array of 12 project images for dodecahedron faces
-        const projectImages = [
-          'images/Alokana_project_images/Alokana01.jpeg',
-          'images/Alokana_project_images/Alokana_02.jpeg',
-          'images/thala-sanchara-project/thala-sanchara.png',
-          'images/Manikelas-project/manikels.jpg',
-          'images/thathkar-project/thathkar.jpg',
-          'images/logos/logo-original.png',
-          'images/OwnersAndMembersPotos/Team-image01.jpeg',
-          'images/OwnersAndMembersPotos/Team-image02.jpeg',
-          'images/OwnersAndMembersPotos/Team-image03.jpeg',
-          'images/OwnersAndMembersPotos/Team-image04.jpeg',
-          'images/logos/logo-image.jpeg',
-          'images/Alokana_project_images/Alokana01.jpeg'
-        ];
+        const directionalLight = new THREE.DirectionalLight(0x4a90e2, 1);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
         
-        // Create fallback canvas texture
-        function createFallbackCanvas() {
-          const canvas2D = document.createElement('canvas');
-          canvas2D.width = 512;
-          canvas2D.height = 512;
-          const ctx = canvas2D.getContext('2d');
-          
-          const gradient = ctx.createLinearGradient(0, 0, 512, 512);
-          gradient.addColorStop(0, '#4a90e2');
-          gradient.addColorStop(1, '#5ab9ea');
-          ctx.fillStyle = gradient;
-          ctx.fillRect(0, 0, 512, 512);
-          
-          ctx.fillStyle = '#ffffff';
-          ctx.font = 'bold 48px Arial';
-          ctx.textAlign = 'center';
-          ctx.fillText('Symphony', 256, 200);
-          ctx.fillText('Events', 256, 280);
-          ctx.fillText('LK', 256, 360);
-          
-          return canvas2D;
-        }
+        // Simple blue gradient material
+        const canvas2D = document.createElement('canvas');
+        canvas2D.width = 256;
+        canvas2D.height = 256;
+        const ctx = canvas2D.getContext('2d');
         
-        // Create materials array for all 12 faces
+        const gradient = ctx.createLinearGradient(0, 0, 256, 256);
+        gradient.addColorStop(0, '#00072D');
+        gradient.addColorStop(0.5, '#4a90e2');
+        gradient.addColorStop(1, '#5ab9ea');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 256, 256);
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 32px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('SYMPHONY', 128, 90);
+        ctx.fillText('EVENTS', 128, 130);
+        ctx.fillText('LK', 128, 180);
+        
+        const texture = new THREE.CanvasTexture(canvas2D);
+        texture.magFilter = THREE.LinearFilter;
+        texture.minFilter = THREE.LinearFilter;
+        
+        // Create cube instead of dodecahedron for reliability
+        const geometry = new THREE.BoxGeometry(2, 2, 2);
         const materials = [];
-        let loadedCount = 0;
         
-        for (let i = 0; i < 12; i++) {
-          const fallbackCanvas = createFallbackCanvas();
-          const fallbackTexture = new THREE.CanvasTexture(fallbackCanvas);
-          
+        // All 6 faces with same texture
+        for (let i = 0; i < 6; i++) {
           const material = new THREE.MeshStandardMaterial({
-            map: fallbackTexture,
+            map: texture.clone(),
             color: 0xffffff,
-            metalness: 0.2,
-            roughness: 0.6,
-            side: THREE.FrontSide
+            metalness: 0.3,
+            roughness: 0.5,
+            emissive: 0x4a90e2,
+            emissiveIntensity: 0.1
           });
-          
           materials.push(material);
-          
-          // Load actual project image
-          if (i < projectImages.length) {
-            const imagePath = projectImages[i];
-            textureLoader.load(
-              imagePath,
-              (texture) => {
-                texture.encoding = THREE.sRGBColorSpace;
-                materials[i].map = texture;
-                materials[i].needsUpdate = true;
-                loadedCount++;
-              },
-              undefined,
-              (error) => {
-                console.warn('Failed to load image:', imagePath);
-              }
-            );
-          }
         }
         
-        // Create geometry with multiple materials
-        const geometry = new THREE.DodecahedronGeometry(1.5, 0);
         const mesh = new THREE.Mesh(geometry, materials);
         scene.add(mesh);
         
-        // Animation
-        let mouseX = 0, mouseY = 0;
+        // Mouse interaction
+        let mouseX = 0;
+        let mouseY = 0;
+        
         window.addEventListener('mousemove', (e) => {
           mouseX = (e.clientX / window.innerWidth) * 2 - 1;
           mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
         });
         
+        // Animation loop
         function animate() {
           requestAnimationFrame(animate);
-          mesh.rotation.y += 0.004;
+          
+          // Rotation
           mesh.rotation.x += 0.002;
-          mesh.position.x += (mouseX * 0.5 - mesh.position.x) * 0.05;
-          mesh.position.y += (mouseY * 0.3 - mesh.position.y) * 0.05;
+          mesh.rotation.y += 0.005;
+          
+          // Mouse follow
+          mesh.position.x += mouseX * 0.5 - mesh.position.x * 0.02;
+          mesh.position.y += mouseY * 0.3 - mesh.position.y * 0.02;
+          
           renderer.render(scene, camera);
         }
+        
         animate();
         
-        // Resize handler
-        window.addEventListener('resize', () => {
-          if (window.innerWidth < 1024) {
-            canvas.style.display = 'none';
-            fallback.style.display = 'flex';
-          } else {
-            canvas.style.display = 'block';
-            fallback.style.display = 'none';
-            camera.aspect = canvas.clientWidth / canvas.clientHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
-          }
-        });
+        console.log('Three.js scene initialized successfully');
+        
       } catch (error) {
-        console.error('Three.js initialization error:', error);
+        console.error('Three.js error:', error);
         canvas.style.display = 'none';
         fallback.style.display = 'flex';
       }
     }
     
-    // Form submission
-    document.querySelector('.contact-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Thank you for your message! This is a demo form.');
-    });
+    // Form handler
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Thank you for your message! This is a demo form.');
+      });
+    }
   </script>
 </body>
 </html>
