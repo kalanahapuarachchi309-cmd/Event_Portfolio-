@@ -87,22 +87,6 @@
             66% { transform: translate(-30px, 30px) scale(0.9); }
         }
         
-        .grid-bg {
-            position: absolute;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(74, 144, 226, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            opacity: 0.5;
-            animation: gridMove 20s linear infinite;
-        }
-        
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-        
         /* Loading Container */
         .loading-container {
             position: relative;
@@ -246,71 +230,6 @@
             margin-bottom: 20px;
         }
         
-        /* Dots Animation */
-        .loading-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 20px;
-        }
-        
-        .dot {
-            width: 12px;
-            height: 12px;
-            background: linear-gradient(135deg, #4a90e2, #5ab9ea);
-            border-radius: 50%;
-            animation: dotPulse 1.5s ease-in-out infinite;
-        }
-        
-        .dot:nth-child(1) { animation-delay: 0s; }
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-        
-        @keyframes dotPulse {
-            0%, 100% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            50% {
-                transform: scale(1.5);
-                opacity: 0.5;
-            }
-        }
-        
-        /* Particles */
-        .particles {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(74, 144, 226, 0.6);
-            border-radius: 50%;
-            animation: particleFloat 10s linear infinite;
-        }
-        
-        @keyframes particleFloat {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(100px);
-                opacity: 0;
-            }
-        }
-        
         /* Fade Out Animation */
         .fade-out {
             animation: fadeOut 0.5s ease forwards;
@@ -354,11 +273,7 @@
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
         <div class="orb orb-3"></div>
-        <div class="grid-bg"></div>
     </div>
-    
-    <!-- Particles -->
-    <div class="particles" id="particles"></div>
     
     <!-- Loading Container -->
     <div class="loading-container">
@@ -390,13 +305,6 @@
         <div class="loading-bar-container">
             <div class="loading-bar"></div>
         </div>
-        
-        <!-- Loading Dots -->
-        <div class="loading-dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
-        </div>
     </div>
     
     <script>
@@ -422,19 +330,6 @@
             }
             percentageEl.textContent = Math.floor(count) + '%';
         }, interval);
-        
-        // Create Particles
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = 30;
-        
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 10 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-            particlesContainer.appendChild(particle);
-        }
     </script>
 </body>
 </html>
