@@ -1227,19 +1227,87 @@
       renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
       
       // Lights
-      scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+      scene.add(new THREE.AmbientLight(0xffffff, 0.6));
       const light = new THREE.DirectionalLight(0x4A90E2, 1.5);
       light.position.set(5, 5, 5);
       scene.add(light);
       
-      // 3D Object
+      // Load logo texture
+      const textureLoader = new THREE.TextureLoader();
+      let texture = null;
+      
+      textureLoader.load('images/logos/logo-original.png', (loadedTexture) => {
+        texture = loadedTexture;
+        texture.encoding = THREE.sRGBColorSpace;
+        
+        // Create canvas to draw logo and blue background
+        const canvas2D = document.createElement('canvas');
+        canvas2D.width = 512;
+        canvas2D.height = 512;
+        const ctx = canvas2D.getContext('2d');
+        
+        // Draw blue gradient background
+        const gradient = ctx.createLinearGradient(0, 0, 512, 512);
+        gradient.addColorStop(0, '#4a90e2');
+        gradient.addColorStop(1, '#5ab9ea');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, 512, 512);
+        
+        // Draw border
+        ctx.strokeStyle = '#00072D';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(0, 0, 512, 512);
+        
+        // Draw logo when it's loaded
+        const img = new Image();
+        img.onload = () => {
+          const size = Math.min(img.width, img.height) * 0.8;
+          const x = (512 - size) / 2;
+          const y = (512 - size) / 2;
+          ctx.drawImage(img, x, y, size, size);
+          
+          canvasTexture.needsUpdate = true;
+        };
+        img.src = 'images/logos/logo-original.png';
+      });
+      
+      // Create texture from canvas
+      const canvasForTexture = document.createElement('canvas');
+      canvasForTexture.width = 512;
+      canvasForTexture.height = 512;
+      const ctxForTexture = canvasForTexture.getContext('2d');
+      
+      // Draw initial gradient
+      const gradient = ctxForTexture.createLinearGradient(0, 0, 512, 512);
+      gradient.addColorStop(0, '#4a90e2');
+      gradient.addColorStop(1, '#5ab9ea');
+      ctxForTexture.fillStyle = gradient;
+      ctxForTexture.fillRect(0, 0, 512, 512);
+      
+      // Add text while loading
+      ctxForTexture.fillStyle = '#ffffff';
+      ctxForTexture.font = 'bold 24px Arial';
+      ctxForTexture.textAlign = 'center';
+      ctxForTexture.fillText('Symphony', 256, 200);
+      ctxForTexture.fillText('Events', 256, 250);
+      ctxForTexture.fillText('LK', 256, 310);
+      
+      const canvasTexture = new THREE.CanvasTexture(canvasForTexture);
+      canvasTexture.magFilter = THREE.LinearFilter;
+      canvasTexture.minFilter = THREE.LinearFilter;
+      
+      // 3D Object with logo texture
       const geometry = new THREE.DodecahedronGeometry(1, 0);
       const material = new THREE.MeshStandardMaterial({
-        color: 0x4A90E2,
-        metalness: 0.8,
-        roughness: 0.2,
-        flatShading: true
+        map: canvasTexture,
+        color: 0xffffff,
+        metalness: 0.3,
+        roughness: 0.4,
+        flatShading: true,
+        emissive: 0x4a90e2,
+        emissiveIntensity: 0.2
       });
+      
       const mesh = new THREE.Mesh(geometry, material);
       scene.add(mesh);
       
