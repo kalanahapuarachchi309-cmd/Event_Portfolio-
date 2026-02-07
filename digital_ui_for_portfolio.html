@@ -66,6 +66,14 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo img {
+      filter: brightness(1.2);
+      max-height: 50px;
+      width: auto;
     }
     
     .nav-links {
@@ -462,6 +470,16 @@
       position: relative;
       height: 240px;
       background: linear-gradient(135deg, rgba(74, 144, 226, 0.2), rgba(0, 7, 45, 0.2));
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .project-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     
     .project-num {
@@ -502,6 +520,61 @@
       border-radius: 4px;
       font-size: 12px;
       color: var(--accent);
+    }
+    
+    /* Team Section */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+    }
+    
+    .team-member {
+      text-align: center;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+    
+    .team-member:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    
+    .team-member:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+    
+    .team-member:nth-child(4) {
+      animation-delay: 0.3s;
+    }
+    
+    .team-img {
+      width: 100%;
+      height: 280px;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      transition: all 0.3s;
+    }
+    
+    .team-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    
+    .team-member:hover .team-img img {
+      transform: scale(1.05);
+    }
+    
+    .team-member h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    
+    .team-member p {
+      font-size: 14px;
+      color: var(--muted);
     }
     
     /* Contact */
@@ -700,11 +773,14 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="nav-content">
-      <div class="logo">Symphony Events LK</div>
+      <div class="logo">
+        <img src="images/logos/logo-original.png" alt="Symphony Events LK" style="height: 40px; object-fit: contain;">
+      </div>
       <ul class="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About Us</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#team">Team</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
@@ -833,6 +909,7 @@
       <div class="projects-grid">
         <div class="project-card">
           <div class="project-img">
+            <img src="images/Alokana_project_images/Alokana01.jpeg" alt="Concerts Event">
             <div class="project-num">01</div>
           </div>
           <div class="project-content">
@@ -848,6 +925,7 @@
 
         <div class="project-card">
           <div class="project-img">
+            <img src="images/Alokana_project_images/Alokana_02.jpeg" alt="Exhibitions Event">
             <div class="project-num">02</div>
           </div>
           <div class="project-content">
@@ -863,6 +941,7 @@
 
         <div class="project-card">
           <div class="project-img">
+            <img src="images/thala-sanchara-project/thala-sanchara.png" alt="Summits & Conferences">
             <div class="project-num">03</div>
           </div>
           <div class="project-content">
@@ -878,6 +957,7 @@
 
         <div class="project-card">
           <div class="project-img">
+            <img src="images/Manikelas-project/manikels.jpg" alt="Weddings Event">
             <div class="project-num">04</div>
           </div>
           <div class="project-content">
@@ -893,6 +973,7 @@
 
         <div class="project-card">
           <div class="project-img">
+            <img src="images/thathkar-project/thathkar.jpg" alt="Product Launches">
             <div class="project-num">05</div>
           </div>
           <div class="project-content">
@@ -919,6 +1000,46 @@
               <span>Production</span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section id="team" class="about">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <span class="section-label">Our Team</span>
+        <h2 class="section-title">Meet the Creatives</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="team-img">
+            <img src="images/OwnersAndMembersPotos/Team-image01.jpeg" alt="Team Member">
+          </div>
+          <h3>Creative Lead</h3>
+          <p>Event Strategy & Vision</p>
+        </div>
+        <div class="team-member">
+          <div class="team-img">
+            <img src="images/OwnersAndMembersPotos/Team-image02.jpeg" alt="Team Member">
+          </div>
+          <h3>Operations Manager</h3>
+          <p>Coordination & Execution</p>
+        </div>
+        <div class="team-member">
+          <div class="team-img">
+            <img src="images/OwnersAndMembersPotos/Team-image03.jpeg" alt="Team Member">
+          </div>
+          <h3>Creative Director</h3>
+          <p>Design & Concept Development</p>
+        </div>
+        <div class="team-member">
+          <div class="team-img">
+            <img src="images/OwnersAndMembersPotos/Team-image04.jpeg" alt="Team Member">
+          </div>
+          <h3>Events Coordinator</h3>
+          <p>Client Relations & Planning</p>
         </div>
       </div>
     </div>
