@@ -288,22 +288,24 @@
     
     .hero-actions {
       display: flex;
-      gap: 16px;
+      gap: 12px;
       margin-bottom: 48px;
+      flex-wrap: nowrap;
     }
     
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      font-size: 15px;
+      gap: 6px;
+      padding: 10px 20px;
+      font-size: 14px;
       font-weight: 600;
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 6px;
       transition: all 0.3s;
       cursor: pointer;
       border: none;
+      white-space: nowrap;
     }
     
     .btn-primary {
@@ -977,7 +979,7 @@
     <div class="container">
       <div style="text-align: center; margin-bottom: 48px;">
         <span class="section-label">Portfolio</span>
-        <h2 class="section-title">Our Event Types</h2>
+        <h2 class="section-title">Our Event And Project</h2>
       </div>
       <div class="projects-grid">
         <div class="project-card">
@@ -986,8 +988,8 @@
             <div class="project-num">01</div>
           </div>
           <div class="project-content">
-            <h3>Concerts</h3>
-            <p>Large-scale musical productions with complete sound engineering, stage setup, audience crowd management, and entertainment coordination.</p>
+            <h3>Alokana crew Team</h3>
+            <p>As powerful event handlers, we deliver large-scale musical productions with complete sound engineering, stage setup, audience crowd management, and flawless entertainment coordination. Trust us to handle every detail of your event with professional expertise.</p>
             <div class="tech-tags">
               <span>Sound Production</span>
               <span>Stage Management</span>
@@ -1063,6 +1065,7 @@
 
         <div class="project-card">
           <div class="project-img">
+            <img src="images/Gamming-event/Gamming-event.jpeg" alt="Gaming Event" onerror="this.style.display='none'">
             <div class="project-num">06</div>
           </div>
           <div class="project-content">
@@ -1072,6 +1075,7 @@
               <span>Entertainment Booking</span>
               <span>Theme Design</span>
               <span>Production</span>
+              <span>Gaming Event</span>
             </div>
           </div>
         </div>
@@ -1308,16 +1312,36 @@
                 ctx.stroke();
               }
               
-              // Draw logo in center
-              const logoSize = 400;
-              const logoX = (1024 - logoSize) / 2;
-              const logoY = (1024 - logoSize) / 2;
+              // Draw logo in center and on multiple sides
+              const logoSize = 200;
+              const centerX = 512;
+              const centerY = 512;
               
               // Create temporary image element
               const img = new Image();
               img.crossOrigin = 'anonymous';
               img.onload = function() {
-                ctx.drawImage(img, logoX, logoY, logoSize, logoSize);
+                // Draw logo center (front)
+                ctx.drawImage(img, centerX - logoSize/2, centerY - logoSize/2, logoSize, logoSize);
+                
+                // Draw logo top
+                ctx.drawImage(img, centerX - logoSize/2, 100, logoSize, logoSize);
+                
+                // Draw logo bottom
+                ctx.drawImage(img, centerX - logoSize/2, 750, logoSize, logoSize);
+                
+                // Draw logo left
+                ctx.drawImage(img, 50, centerY - logoSize/2, logoSize, logoSize);
+                
+                // Draw logo right
+                ctx.drawImage(img, 850, centerY - logoSize/2, logoSize, logoSize);
+                
+                // Draw logo back (flipped)
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.scale(-1, 1);
+                ctx.drawImage(img, -logoSize/2, -logoSize/2, logoSize, logoSize);
+                ctx.restore();
                 
                 // Create texture from canvas
                 const texture = new THREE.CanvasTexture(canvas2D);

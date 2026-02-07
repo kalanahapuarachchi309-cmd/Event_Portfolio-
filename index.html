@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Symphony Events LK - Loading...</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg: #0a0e27;
+            --surface: #0f1535;
+            --card: #141c3f;
+            --text: #ffffff;
+            --muted: #7fa3d4;
+            --primary: #00072D;
+            --accent: #4a90e2;
+            --cyan: #5ab9ea;
+            --light-blue: #5ab9ea;
+            --border: rgba(74, 144, 226, 0.2);
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Animated Background */
+        .loading-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .orb-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(74, 144, 226, 0.6), transparent 70%);
+            top: -200px;
+            left: -200px;
+        }
+        
+        .orb-2 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 7, 45, 0.6), transparent 70%);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: -10s;
+        }
+        
+        .orb-3 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(90, 185, 234, 0.5), transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+        
+        .grid-bg {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(74, 144, 226, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(74, 144, 226, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.5;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        /* Loading Container */
+        .loading-container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Logo Animation */
+        .logo-wrapper {
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .logo-img {
+            width: 150px;
+            height: auto;
+            filter: brightness(1.3) drop-shadow(0 0 30px rgba(74, 144, 226, 0.6));
+            animation: logoFloat 3s ease-in-out infinite, logoPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        @keyframes logoPulse {
+            0%, 100% {
+                filter: brightness(1.3) drop-shadow(0 0 30px rgba(74, 144, 226, 0.6));
+            }
+            50% {
+                filter: brightness(1.6) drop-shadow(0 0 50px rgba(74, 144, 226, 0.9));
+            }
+        }
+        
+        /* Circular Progress Ring */
+        .logo-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+        }
+        
+        .logo-ring circle {
+            fill: none;
+            stroke-width: 3;
+        }
+        
+        .ring-bg {
+            stroke: rgba(74, 144, 226, 0.2);
+        }
+        
+        .ring-progress {
+            stroke: url(#gradient);
+            stroke-linecap: round;
+            stroke-dasharray: 565;
+            stroke-dashoffset: 565;
+            animation: ringProgress 3s ease-in-out forwards;
+            transform: rotate(-90deg);
+            transform-origin: center;
+        }
+        
+        @keyframes ringProgress {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        /* Text Animations */
+        .loading-text {
+            margin-bottom: 30px;
+        }
+        
+        .loading-text h1 {
+            font-size: 48px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4a90e2, #5ab9ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+        
+        .loading-text p {
+            font-size: 18px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        
+        /* Loading Bar */
+        .loading-bar-container {
+            width: 300px;
+            height: 4px;
+            background: rgba(74, 144, 226, 0.2);
+            border-radius: 10px;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #5ab9ea);
+            border-radius: 10px;
+            width: 0%;
+            animation: loadBar 3s ease-in-out forwards;
+            box-shadow: 0 0 20px rgba(74, 144, 226, 0.6);
+        }
+        
+        @keyframes loadBar {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        /* Loading Percentage */
+        .loading-percentage {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4a90e2, #5ab9ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+        
+        /* Dots Animation */
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #4a90e2, #5ab9ea);
+            border-radius: 50%;
+            animation: dotPulse 1.5s ease-in-out infinite;
+        }
+        
+        .dot:nth-child(1) { animation-delay: 0s; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes dotPulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5);
+                opacity: 0.5;
+            }
+        }
+        
+        /* Particles */
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(74, 144, 226, 0.6);
+            border-radius: 50%;
+            animation: particleFloat 10s linear infinite;
+        }
+        
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+        
+        /* Fade Out Animation */
+        .fade-out {
+            animation: fadeOut 0.5s ease forwards;
+        }
+        
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-img {
+                width: 120px;
+            }
+            
+            .logo-ring {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .loading-text h1 {
+                font-size: 36px;
+            }
+            
+            .loading-text p {
+                font-size: 16px;
+            }
+            
+            .loading-bar-container {
+                width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="loading-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="grid-bg"></div>
+    </div>
+    
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Loading Container -->
+    <div class="loading-container">
+        <!-- Logo with Ring -->
+        <div class="logo-wrapper">
+            <svg class="logo-ring" viewBox="0 0 200 200">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#4a90e2;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#5ab9ea;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <circle class="ring-bg" cx="100" cy="100" r="90"></circle>
+                <circle class="ring-progress" cx="100" cy="100" r="90"></circle>
+            </svg>
+            <img src="images/logos/logo-original.png" alt="Symphony Events LK" class="logo-img">
+        </div>
+        
+        <!-- Loading Text -->
+        <div class="loading-text">
+            <h1>SYMPHONY EVENTS</h1>
+            <p>Crafting Unforgettable Experiences</p>
+        </div>
+        
+        <!-- Loading Percentage -->
+        <div class="loading-percentage" id="percentage">0%</div>
+        
+        <!-- Loading Bar -->
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        
+        <!-- Loading Dots -->
+        <div class="loading-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Percentage Counter
+        const percentageEl = document.getElementById('percentage');
+        let count = 0;
+        const duration = 3000; // 3 seconds
+        const interval = 30;
+        const increment = 100 / (duration / interval);
+        
+        const counter = setInterval(() => {
+            count += increment;
+            if (count >= 100) {
+                count = 100;
+                clearInterval(counter);
+                setTimeout(() => {
+                    // Redirect to home page
+                    document.body.classList.add('fade-out');
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 500);
+                }, 500);
+            }
+            percentageEl.textContent = Math.floor(count) + '%';
+        }, interval);
+        
+        // Create Particles
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 30;
+        
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>
