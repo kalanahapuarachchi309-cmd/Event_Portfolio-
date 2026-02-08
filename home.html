@@ -557,6 +557,215 @@
       color: var(--accent);
       transform: translateY(-2px);
     }
+
+    /* Workshops Section */
+    .workshops {
+      background: linear-gradient(145deg, rgba(8, 13, 34, 0.95), rgba(16, 24, 58, 0.9));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .workshops::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 10% 20%, rgba(90, 185, 234, 0.18), transparent 45%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .workshop-intro {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .workshop-intro p {
+      color: var(--muted);
+      font-size: 17px;
+      margin-top: 16px;
+    }
+
+    .workshop-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .workshop-hero {
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(19, 26, 60, 0.9);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .workshop-hero img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      filter: saturate(1.1);
+    }
+
+    .workshop-hero__content {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .pill-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .pill-list li {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(74, 144, 226, 0.15);
+      border: 1px solid rgba(74, 144, 226, 0.5);
+      font-size: 13px;
+      letter-spacing: 0.4px;
+    }
+
+    .workshop-info {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .workshop-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .meta-card {
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(13, 18, 44, 0.9);
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .meta-card small {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .meta-card span {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .agenda-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      background: rgba(15, 22, 52, 0.95);
+    }
+
+    .agenda-card h4 {
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .agenda-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .agenda-card li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 15px;
+    }
+
+    .agenda-card li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    .workshop-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+    }
+
+    .workshop-gallery figure {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(90, 185, 234, 0.3);
+    }
+
+    .workshop-gallery img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .workshop-gallery figure:hover img {
+      transform: scale(1.05);
+    }
+
+    .workshop-gallery figcaption {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 10px 14px;
+      font-size: 12px;
+      letter-spacing: 0.4px;
+      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.85));
+    }
+
+    .workshop-cta {
+      margin-top: 32px;
+      padding: 28px;
+      border-radius: 18px;
+      border: 1px dashed rgba(90, 185, 234, 0.5);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+      justify-content: space-between;
+      background: rgba(10, 16, 38, 0.8);
+    }
+
+    .workshop-cta p {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 520px;
+    }
+
+    .btn-glow {
+      box-shadow: 0 0 20px rgba(74, 144, 226, 0.4);
+    }
     
     /* Projects */
     .projects-grid {
@@ -577,6 +786,14 @@
     
     .project-card:hover {
       transform: translateY(-8px);
+
+      .team-hero__overlay {
+        padding: 24px;
+      }
+
+      .team-hero__overlay h3 {
+        font-size: 24px;
+      }
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
       border-color: var(--accent);
     }
@@ -916,6 +1133,51 @@
     }
     
     /* Team Section */
+    .team-hero {
+      margin-bottom: 40px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      position: relative;
+      background: rgba(15, 20, 48, 0.85);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    .team-hero img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.05);
+    }
+
+    .team-hero__overlay {
+      position: absolute;
+      inset: auto 0 0 0;
+      padding: 32px;
+      background: linear-gradient(180deg, transparent, rgba(5, 7, 20, 0.92));
+    }
+
+    .team-hero__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(90, 185, 234, 0.5);
+      background: rgba(90, 185, 234, 0.15);
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .team-hero__overlay h3 {
+      font-size: 28px;
+      max-width: 560px;
+      line-height: 1.4;
+    }
+
     .team-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1199,6 +1461,14 @@
         height: 500px;
       }
 
+      .workshop-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .workshop-hero img {
+        height: 280px;
+      }
+
       .case-grid {
         grid-template-columns: 1fr;
         gap: 32px;
@@ -1212,6 +1482,10 @@
       .feature-card img,
       .degree-card img {
         height: 220px;
+      }
+
+      .team-hero img {
+        height: 360px;
       }
     }
     
@@ -1251,6 +1525,15 @@
       
       .projects-grid {
         grid-template-columns: 1fr;
+      }
+
+      .workshop-cta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .workshop-gallery img {
+        height: 160px;
       }
 
       footer {
@@ -1306,6 +1589,26 @@
       .btn {
         width: 100%;
         justify-content: center;
+      }
+
+      .workshop-hero__content {
+        padding: 24px;
+      }
+
+      .pill-list {
+        flex-direction: column;
+      }
+
+      .workshop-gallery img {
+        height: 130px;
+      }
+
+      .team-hero img {
+        height: 260px;
+      }
+
+      .team-hero__overlay h3 {
+        font-size: 20px;
       }
 
       footer {
@@ -1394,6 +1697,7 @@
       <ul class="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About Us</a></li>
+        <li><a href="#workshops">Workshops</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#jockey">Jockey Summit</a></li>
         <li><a href="#gamment">Gamment Group</a></li>
@@ -1529,6 +1833,95 @@
     </div>
   </section>
 
+  <!-- Workshops Section -->
+  <section id="workshops" class="workshops">
+    <div class="container">
+      <div class="workshop-intro">
+        <span class="section-label">Signature Workshops</span>
+        <h2 class="section-title">Capture the Future workshop</h2>
+        <p>
+          A full-day, hands-on photography intensive curated by Symphony Events LK for creatives who want to turn passion into
+          sustainable careers. From ideation to monetization, every module focuses on real-world industry playbooks.
+        </p>
+      </div>
+
+      <div class="workshop-grid">
+        <article class="workshop-hero">
+          <img src="images/Capture%20the%20future%20-%20workshop/Feutuer_Concerts.jpeg" alt="Participants exploring lighting setups during Capture the Future workshop">
+          <div class="workshop-hero__content">
+            <h3>Capture the Future – One Day Photography Workshop</h3>
+            <p>
+              Led by top Fashion, Wedding, and Commercial photographers, this immersive intensive delivers portfolio-ready briefs,
+              live critiques, and proven tactics to earn professionally through the lens.
+            </p>
+            <ul class="pill-list">
+              <li>Fashion Lighting Labs</li>
+              <li>Wedding Storyboarding</li>
+              <li>Commercial Pitch Decks</li>
+              <li>Pricing & Contracts</li>
+              <li>Industry Networking</li>
+            </ul>
+          </div>
+        </article>
+
+        <div class="workshop-info">
+          <div class="workshop-meta">
+            <div class="meta-card">
+              <small>Venue</small>
+              <span>BMICH</span>
+            </div>
+            <div class="meta-card">
+              <small>Date</small>
+              <span>23rd February</span>
+            </div>
+            <div class="meta-card">
+              <small>Organizer</small>
+              <span>Symphony Events LK</span>
+            </div>
+            <div class="meta-card">
+              <small>Seats</small>
+              <span>Limited 40</span>
+            </div>
+          </div>
+
+          <div class="agenda-card">
+            <h4>Inside the Day</h4>
+            <ul>
+              <li>Master camera control with guided technical drills tailored to your gear.</li>
+              <li>Create cohesive fashion, wedding, and commercial narratives with art direction support.</li>
+              <li>Structure profitable packages, contracts, and client communication flows.</li>
+              <li>Curate and critique portfolios to communicate value to agencies and brands.</li>
+              <li>Close the day with a panel Q&A and networking mixer with industry decision-makers.</li>
+            </ul>
+          </div>
+
+          <div class="workshop-gallery">
+            <figure>
+              <img src="images/Capture%20the%20future%20-%20workshop/Feutuer_Concerts2.jpeg" alt="Lighting demonstration during Capture the Future workshop">
+              <figcaption>Live studio lighting drills</figcaption>
+            </figure>
+            <figure>
+              <img src="images/Capture%20the%20future%20-%20workshop/Feutuer_Concerts3.jpeg" alt="Mentor guiding attendee at Capture the Future workshop">
+              <figcaption>Mentor-led critiques</figcaption>
+            </figure>
+            <figure>
+              <img src="images/Capture%20the%20future%20-%20workshop/Feutuer_Concerts4.jpeg" alt="Networking session at Capture the Future workshop">
+              <figcaption>Community networking</figcaption>
+            </figure>
+          </div>
+
+          <div class="workshop-cta">
+            <p>
+              Seats fill fast. Secure your access to real-world workflows, curated mentors, and a community that keeps you
+              accountable long after the workshop wraps.
+            </p>
+            <a href="#contact" class="btn btn-primary btn-glow">Reserve Your Seat</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Projects Section -->
   <section id="projects">
     <div class="container">
@@ -1543,7 +1936,7 @@
             <div class="project-num">01</div>
           </div>
           <div class="project-content">
-            <h3>Alokana crew Team</h3>
+            <h3>Alokana Ticketing Crew</h3>
             <p>As powerful event handlers, we deliver large-scale musical productions with complete sound engineering, stage setup, audience crowd management, and flawless entertainment coordination. Trust us to handle every detail of your event with professional expertise.</p>
             <div class="tech-tags">
               <span>Sound Production</span>
@@ -1572,11 +1965,11 @@
 
         <div class="project-card">
           <div class="project-img">
-            <img src="images/thala-sanchara-project/thala-sanchara.png" alt="Summits & Conferences" onerror="this.style.display='none'">
+            <img src="images/thala-sanchara-project/thala-sanchara.jpeg" alt="Summits & Conferences" onerror="this.style.display='none'">
             <div class="project-num">03</div>
           </div>
           <div class="project-content">
-            <h3>Summits & Conferences</h3>
+            <h3>Concerts & Entertainment Plus</h3>
             <p>Business summits with keynote coordination, speaker management, networking sessions, and professional event execution.</p>
             <div class="tech-tags">
               <span>Speaker Coordination</span>
@@ -1592,7 +1985,7 @@
             <div class="project-num">04</div>
           </div>
           <div class="project-content">
-            <h3>Manikela Project</h3>
+            <h3>Project Manikela’s</h3>
             <p>Elegant wedding ceremonies and receptions with venue coordination, catering management, decoration, and guest hospitality.</p>
             <div class="tech-tags">
               <span>Venue Setup</span>
@@ -1608,7 +2001,7 @@
             <div class="project-num">05</div>
           </div>
           <div class="project-content">
-            <h3>Tathkar Project</h3>
+            <h3>Project Thathkar</h3>
             <p>Dynamic product launches with media coordination, live demonstrations, influencer management, and brand activation.</p>
             <div class="tech-tags">
               <span>Media Relations</span>
@@ -1624,7 +2017,7 @@
             <div class="project-num">06</div>
           </div>
           <div class="project-content">
-            <h3>Entertainment & More</h3>
+            <h3>Esports & Battles</h3>
             <p>Variety shows, themed parties, festivals, and custom entertainment experiences tailored to your unique vision.</p>
             <div class="tech-tags">
               <span>Entertainment Booking</span>
@@ -1864,7 +2257,7 @@
     <div class="container">
       <div style="text-align: center; margin-bottom: 48px; position: relative; z-index: 1;">
         <span class="section-label">Learning Experience</span>
-        <h2 class="section-title">Degree Programming Project</h2>
+        <h2 class="section-title">Graduations & Academic Plus</h2>
         <p style="color: var(--muted); max-width: 720px; margin: 0 auto;">
           Concept spaces designed for a technology-focused degree program. Every bay blends hardware, collaboration, and
           showcase-ready lighting so students can present prototypes with the same polish as our corporate events.
@@ -1909,6 +2302,15 @@
       <div style="text-align: center; margin-bottom: 48px;">
         <span class="section-label">Our Team</span>
         <h2 class="section-title">Meet the Creatives</h2>
+      </div>
+      <div class="team-hero">
+        <img src="images/OwnersAndMembersPotos/Team-image05.jpeg" alt="Symphony Events creative collective group photo">
+        <div class="team-hero__overlay">
+          <span class="team-hero__label">Creative Collective</span>
+          <h3>
+            Designers, producers, strategists, and storytellers crafting immersive brand moments under one roof.
+          </h3>
+        </div>
       </div>
       <div class="team-grid">
         <div class="team-member">
