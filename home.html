@@ -640,6 +640,280 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
+
+    /* Case Study */
+    .case-study {
+      background: linear-gradient(135deg, rgba(10, 14, 39, 0.95), rgba(20, 24, 58, 0.95));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+
+    .case-study::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(74, 144, 226, 0.15), transparent 45%);
+      pointer-events: none;
+    }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 56px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .case-intro h3 {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .case-location {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .case-highlight {
+      font-size: 18px;
+      margin-bottom: 24px;
+      color: #d7e3ff;
+    }
+
+    .case-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .case-meta-item {
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(20, 23, 50, 0.7);
+      min-width: 180px;
+    }
+
+    .case-meta-item small {
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .case-meta-item span {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .case-card {
+      border: 1px solid var(--border);
+      background: rgba(12, 16, 40, 0.85);
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .case-card h4 {
+      text-transform: uppercase;
+      font-size: 14px;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+      color: var(--muted);
+    }
+
+    .case-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .case-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    .case-list li::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .case-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* Galleries */
+    .gallery-section {
+      background: rgba(8, 12, 34, 0.85);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 20%, rgba(90, 185, 234, 0.15), transparent 45%);
+      pointer-events: none;
+    }
+
+    .gallery-feature {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px;
+      margin-bottom: 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .feature-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      background: rgba(15, 20, 48, 0.85);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    .feature-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid rgba(74, 144, 226, 0.3);
+    }
+
+    .feature-card p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .feature-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .feature-list li::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-top: 7px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .gallery-subtitle {
+      font-size: 22px;
+      margin: 16px 0 24px;
+      font-family: var(--font-display);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .gallery-grid figure {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(13, 18, 44, 0.9);
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-grid figure:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-grid figcaption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 12px 16px;
+      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.7));
+      font-size: 13px;
+      letter-spacing: 0.3px;
+    }
+
+    .degree-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .degree-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(14, 18, 42, 0.9);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .degree-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+
+    .degree-card__body {
+      padding: 20px;
+    }
+
+    .degree-card__body h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .degree-card__body p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
     
     /* Team Section */
     .team-grid {
@@ -924,6 +1198,21 @@
       .canvas-wrap {
         height: 500px;
       }
+
+      .case-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .gallery-feature {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid img,
+      .feature-card img,
+      .degree-card img {
+        height: 220px;
+      }
     }
     
     @media (max-width: 768px) {
@@ -997,6 +1286,10 @@
 
       .footer-bottom p {
         font-size: 12px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       }
     }
     
@@ -1073,6 +1366,20 @@
       .logo-text {
         font-size: 14px;
       }
+
+      .case-card {
+        padding: 18px;
+      }
+
+      .feature-card {
+        padding: 16px;
+      }
+
+      .feature-card img,
+      .gallery-grid img,
+      .degree-card img {
+        height: 180px;
+      }
     }
   </style>
 </head>
@@ -1088,6 +1395,9 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About Us</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#jockey">Jockey Summit</a></li>
+        <li><a href="#gamment">Gamment Group</a></li>
+        <li><a href="#degree">Degree Project</a></li>
         <li><a href="#team">Team</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -1324,6 +1634,271 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study Section -->
+  <section id="jockey" class="case-study">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 48px;">
+        <span class="section-label">Case Study</span>
+        <h2 class="section-title">JOCKEY Summit | Star Garments Group</h2>
+      </div>
+      <div class="case-grid">
+        <div class="case-intro">
+          <h3>Proposed Interior, Installations, and Event Planning</h3>
+          <p class="case-location">Katunayake BOI Zone, Sri Lanka</p>
+          <p class="case-highlight">
+            Symphony Events LK produced a fast-tracked, full-scale experience for the three-day JOCKEY Summit,
+            translating Star Garments mood imagery into a fully realized interior and event environment within days.
+          </p>
+          <div class="case-meta">
+            <div class="case-meta-item">
+              <small>Brand</small>
+              <span>JOCKEY</span>
+            </div>
+            <div class="case-meta-item">
+              <small>Event Window</small>
+              <span>Oct 6 - 8</span>
+            </div>
+            <div class="case-meta-item">
+              <small>Scope</small>
+              <span>Event & Interior Ops</span>
+            </div>
+          </div>
+          <p>
+            The engagement covered concept development, approvals, production planning, procurement, on-site installations,
+            and logistics oversight so that Star Garments could host talent, partners, and guests inside a purpose-built summit arena.
+          </p>
+        </div>
+        <div>
+          <div class="case-card">
+            <h4>Scope and Deliverables</h4>
+            <ul class="case-list">
+              <li>Master visual concept for the full summit journey.</li>
+              <li>Graphic systems built through illustrations, SketchUp models, and digital drawings.</li>
+              <li>End-to-end interior design package with 3D visuals, 3D models, and detailed layout planning.</li>
+              <li>Complete interior detail drawings, fit-out documentation, and lighting layouts.</li>
+              <li>Event management, installations, planning, and logistics delivered by Symphony Events LK.</li>
+            </ul>
+          </div>
+          <div class="case-card">
+            <h4>Operations Focus</h4>
+            <ul class="case-list">
+              <li>Delivered full interiors aligned with Star Garments mood images.</li>
+              <li>Developed equipment visuals, lighting concepts, and content assets.</li>
+              <li>Designed furniture, fit-outs, and accessory groupings by zone.</li>
+              <li>Curated light fittings, indoor equipment, and active-wear arena bicycles.</li>
+              <li>Selected color palettes, frames, prints, and bespoke furnishings that reinforced the brand story.</li>
+            </ul>
+            <p class="case-note">Result: A distinct, high-energy summit experience built under a compressed timeline without compromising detail.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gamment Group Gallery Section -->
+  <section id="gamment" class="gallery-section">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 48px; position: relative; z-index: 1;">
+        <span class="section-label">Immersive Installations</span>
+        <h2 class="section-title">Gamment Group Project</h2>
+        <p style="color: var(--muted); max-width: 760px; margin: 0 auto;">
+          A comprehensive build-out for Star Garments' corporate experience center featuring retail pods, activewear arenas,
+          and branded storytelling corners. Every render and installation detail below was produced and executed by Symphony Events LK.
+        </p>
+      </div>
+
+      <div class="gallery-feature">
+        <article class="feature-card">
+          <img src="images/Gamment-Group-Project/R1.jpg" alt="Immersive activewear runway concept for Gamment Group">
+          <div>
+            <h3>Immersive Activewear Arena</h3>
+            <p>
+              Rapid concept renders translating the JOCKEY brief into a tactile runway experience with layered lighting,
+              kinetic arches, and premium surfacing.
+            </p>
+            <ul class="feature-list">
+              <li>Color and material palettes derived from JOCKEY activewear mood images.</li>
+              <li>Sculpted circulation path guiding guests through highlight capsules.</li>
+              <li>Lighting cues and halo trims mapped to peak demonstration moments.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <img src="images/Gamment-Group-Project/R5.jpg" alt="Retail pod visualization for Gamment Group interior fit-out">
+          <div>
+            <h3>Fit-out Detailing & Logistics</h3>
+            <p>
+              Installation drawings and render packages coordinated with Star Garments production teams to keep procurement,
+              furniture fabrication, and site works aligned in the BOI zone.
+            </p>
+            <ul class="feature-list">
+              <li>Detailed joinery packages for accessories, seating, and merchandiser pods.</li>
+              <li>Integrated logistics plan covering crating, site access, and rapid assembly.</li>
+              <li>Lighting layouts synced with AV cues to maintain cinematic reveals.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="gallery-subtitle">Rapid Visualization Set</h3>
+      <div class="gallery-grid" aria-label="Gamment Group renders">
+        <figure>
+          <img src="images/Gamment-Group-Project/R1.jpg" alt="Perspective render of entrance tunnel">
+          <figcaption>Entrance tunnel concept &mdash; layered acrylic fins</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/R2.jpg" alt="Concept render with illuminated frames">
+          <figcaption>Illuminated brand frames and seating capsules</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/R3.jpg" alt="Stage render with kinetic arches">
+          <figcaption>Kinetic arch stage for keynote reveals</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/R4.jpg" alt="Retail pod render with mannequins">
+          <figcaption>Retail pod showcasing activewear drops</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/R5.jpg" alt="Interior render highlighting seating clusters">
+          <figcaption>Conversation lounges with layered seating</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/R6.jpg" alt="Immersive wall graphic render">
+          <figcaption>Graphic wall system for narrative framing</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/R7.jpg" alt="Lighting mock-up for event space">
+          <figcaption>Lighting mock-up with programmable gradients</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/R8.jpg" alt="Audience seating render">
+          <figcaption>Audience seating with integrated charging rails</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/R9.jpg" alt="Product launch render">
+          <figcaption>Launch platform for product storytelling</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/R10.jpg" alt="Experience center render">
+          <figcaption>Experience center overview with dual tiers</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/R12.jpg" alt="Breakout zone render">
+          <figcaption>Breakout zone focused on lifestyle vignettes</figcaption>
+        </figure>
+      </div>
+
+      <h3 class="gallery-subtitle">On-Site Gallery</h3>
+      <div class="gallery-grid" aria-label="Gamment Group installation gallery">
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group01.jpeg" alt="Gallery view 1">
+          <figcaption>Gallery 01 &mdash; Entry ambience</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group02.jpeg" alt="Gallery view 2">
+          <figcaption>Gallery 02 &mdash; Statement tunnel</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group03.jpeg" alt="Gallery view 3">
+          <figcaption>Gallery 03 &mdash; Hero mannequin cluster</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group04.jpeg" alt="Gallery view 4">
+          <figcaption>Gallery 04 &mdash; Lounge bay</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group05.jpeg" alt="Gallery view 5">
+          <figcaption>Gallery 05 &mdash; Lighting canopy</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group06.jpeg" alt="Gallery view 6">
+          <figcaption>Gallery 06 &mdash; Runway perspective</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group07.jpeg" alt="Gallery view 7">
+          <figcaption>Gallery 07 &mdash; Product wall</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group08.jpeg" alt="Gallery view 8">
+          <figcaption>Gallery 08 &mdash; Interior details</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group09.jpeg" alt="Gallery view 9">
+          <figcaption>Gallery 09 &mdash; Hospitality zone</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group10.jpeg" alt="Gallery view 10">
+          <figcaption>Gallery 10 &mdash; Brand timeline</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group11.jpeg" alt="Gallery view 11">
+          <figcaption>Gallery 11 &mdash; Lighting lattice</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group12.jpeg" alt="Gallery view 12">
+          <figcaption>Gallery 12 &mdash; Informal seating</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group13.jpeg" alt="Gallery view 13">
+          <figcaption>Gallery 13 &mdash; Showcase island</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group14.jpeg" alt="Gallery view 14">
+          <figcaption>Gallery 14 &mdash; Accent lighting study</figcaption>
+        </figure>
+        <figure>
+          <img src="images/Gamment-Group-Project/Gallary/Gamment_Group15.jpeg" alt="Gallery view 15">
+          <figcaption>Gallery 15 &mdash; Immersive corridor</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Degree Programming Showcase -->
+  <section id="degree" class="gallery-section">
+    <div class="container">
+      <div style="text-align: center; margin-bottom: 48px; position: relative; z-index: 1;">
+        <span class="section-label">Learning Experience</span>
+        <h2 class="section-title">Degree Programming Project</h2>
+        <p style="color: var(--muted); max-width: 720px; margin: 0 auto;">
+          Concept spaces designed for a technology-focused degree program. Every bay blends hardware, collaboration, and
+          showcase-ready lighting so students can present prototypes with the same polish as our corporate events.
+        </p>
+      </div>
+      <div class="degree-grid">
+        <article class="degree-card">
+          <img src="images/degree_Programming_Project/stu01.jpeg" alt="Student collaboration zone photograph">
+          <div class="degree-card__body">
+            <h3>Collaboration Studio</h3>
+            <p>Multi-height seating with writable walls, ideal for sprint planning and concept critiques.</p>
+          </div>
+        </article>
+        <article class="degree-card">
+          <img src="images/degree_Programming_Project/stu02.jpeg" alt="Technology lab interior photograph">
+          <div class="degree-card__body">
+            <h3>Technology Lab</h3>
+            <p>Embedded power tracks and diffused lighting keep laptop bays, testing rigs, and IoT benches photo-ready.</p>
+          </div>
+        </article>
+        <article class="degree-card">
+          <img src="images/degree_Programming_Project/stu03.jpeg" alt="Presentation stage photograph">
+          <div class="degree-card__body">
+            <h3>Presentation Stage</h3>
+            <p>LED-backdropped pitching area for juries, featuring sheer drapes that echo the Symphony Events aesthetic.</p>
+          </div>
+        </article>
+        <article class="degree-card">
+          <img src="images/degree_Programming_Project/st04.jpeg" alt="Breakout lounge photograph">
+          <div class="degree-card__body">
+            <h3>Breakout Lounge</h3>
+            <p>Soft seating, layered textures, and accent lamps provide hospitality-level comfort between reviews.</p>
+          </div>
+        </article>
       </div>
     </div>
   </section>

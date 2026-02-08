@@ -308,28 +308,40 @@
     </div>
     
     <script>
-        // Percentage Counter
-        const percentageEl = document.getElementById('percentage');
-        let count = 0;
-        const duration = 3000; // 3 seconds
-        const interval = 30;
-        const increment = 100 / (duration / interval);
-        
-        const counter = setInterval(() => {
-            count += increment;
-            if (count >= 100) {
-                count = 100;
-                clearInterval(counter);
-                setTimeout(() => {
-                    // Redirect to home page
-                    document.body.classList.add('fade-out');
-                    setTimeout(() => {
-                        window.location.href = 'home.html';
-                    }, 500);
-                }, 500);
+        (function () {
+            var percentageEl = document.getElementById('percentage');
+            if (!percentageEl) {
+                window.location.href = './home.html';
+                return;
             }
-            percentageEl.textContent = Math.floor(count) + '%';
-        }, interval);
+
+            var count = 0;
+            var duration = 3000; // 3 seconds
+            var interval = 30;
+            var increment = 100 / (duration / interval);
+
+            var counter = setInterval(function () {
+                count += increment;
+                if (count >= 100) {
+                    count = 100;
+                    clearInterval(counter);
+                    setTimeout(function () {
+                        document.body.classList.add('fade-out');
+                        setTimeout(function () {
+                            window.location.href = './home.html';
+                        }, 500);
+                    }, 500);
+                }
+                percentageEl.textContent = Math.floor(count) + '%';
+            }, interval);
+
+            // Safety fallback in case the interval never fires
+            setTimeout(function () {
+                if (count < 100) {
+                    window.location.href = './home.html';
+                }
+            }, duration + 1500);
+        })();
     </script>
 </body>
 </html>
