@@ -1477,11 +1477,23 @@
       .degree-card img {
         height: 220px;
       }
+
+      .workshop-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .workshop-hero img {
+        height: 280px;
+      }
     }
     
     @media (max-width: 768px) {
       .nav-links {
         display: none;
+      }
+
+      .nav-content {
+        padding: 16px 20px;
       }
       
       h1 {
@@ -1520,6 +1532,22 @@
       .workshop-cta {
         flex-direction: column;
         align-items: flex-start;
+      }
+
+      .workshop-intro {
+        margin-bottom: 36px;
+      }
+
+      .workshop-intro p {
+        font-size: 16px;
+      }
+
+      .workshop-hero img {
+        height: 240px;
+      }
+
+      .workshop-meta {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       }
 
       .workshop-gallery img {
@@ -1570,6 +1598,10 @@
       h1 {
         font-size: 32px;
       }
+
+      .container {
+        padding: 0 16px;
+      }
       
       .hero-actions {
         flex-direction: column;
@@ -1583,6 +1615,18 @@
 
       .workshop-hero__content {
         padding: 24px;
+      }
+
+      .workshop-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .agenda-card {
+        padding: 20px;
+      }
+
+      .workshop-cta {
+        padding: 20px;
       }
 
       .pill-list {
